@@ -1,51 +1,28 @@
-const onConnection = ( io ) => { 
-    io.on( 'connection', ( socket ) => {
-        console.log( socket.id + 'connected' )
-    })
+
+let rooms = {}
+
+exports.onConnection = ( id ) => { 
+    console.log( id + 'connected' )
 }
 
-exports.onJoinRoom = ( ) => {
+exports.socketJoinRoom = ( data, id ) => {
 
-    const { io } = require( './index.js')
+    const { io } = require( './index.js' )
 
-    io.on( 'join-room', ( socket, data ) => {
+    const { roomName, username } = data
 
-        const { roomName, username } = data
+    addUserToRoom( roomName, id, username )
+    
 
-        addUserToRoom( roomName, socket.id, username )
-       
+    io.to( roomName ).emit( 'chat-members', ( rooms ) => {
 
-        io.to( roomName ).emit( 'chat-members', ( rooms ) => {
-
-            return rooms[ roomName ]
-        })
-
-    })
-}
-
-exports.onLeaveRoom = ( ) => {
-
-    const { io } = require( './index.js')
-
-    io.on( 'leave-room', ( socket ) => {
-
-       leaveRoom( socket.id )
-
+        return rooms[ roomName ]
     })
 
+    
 }
 
-exports.onDisconnect = ( ) => {
-
-    const { io } = require( './index.js')
-
-    io.on( 'disconnect', ( socket ) => {
-
-        leaveRoom( socket.id )
-    })
-}
-
-const leaveRoom = ( id ) => {
+exports.socketLeaveRoom = ( id  ) => {
 
    
     const { io } = require( './index.js')
