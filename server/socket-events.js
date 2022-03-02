@@ -1,4 +1,3 @@
-
 let rooms = {}
 
 exports.onConnection = ( id ) => { 

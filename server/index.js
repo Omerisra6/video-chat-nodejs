@@ -1,13 +1,19 @@
+require('dotenv').config();
 const express = require( 'express' )
 const app = express()
 const server = require( 'http' ).Server( app )
 const io = require( 'socket.io' )( server )
+const PORT = process.env.PORT || 8000;
+
+app.listen( PORT, () => {
+
+  console.log(`Server is listening on port ${PORT}`);
+});
 
 const { socketConnection,
         socketJoinRoom, 
         socketLeaveRoom, 
 } = require( './socket-events.js' )
-
 
 io.listen( server, {
 	cors: {
@@ -36,8 +42,3 @@ io.on( 'connection', ( socket) => {
     })  
 
 })
-
-
-
-
-server.listen( 3000 )
