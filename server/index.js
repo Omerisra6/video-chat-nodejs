@@ -43,3 +43,5 @@ io.on( 'connection', ( socket ) => {
     })  
 
 })
+
+exports.io = io
