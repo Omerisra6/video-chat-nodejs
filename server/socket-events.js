@@ -14,10 +14,7 @@ exports.socketJoinRoom = ( data, socket ) => {
     
     socket.join( roomName )
 
-    io.to( roomName ).emit( 'chat-members', ( rooms ) => {
-
-        return rooms[ roomName ]
-    })
+    io.to( roomName ).emit( 'chat-members', rooms[ roomName ] )
    
 }
 
@@ -31,10 +28,7 @@ exports.socketLeaveRoom = ( socket  ) => {
         return
     }
 
-    io.to( roomName ).emit( 'chat-members', ( rooms ) => {
-
-        return rooms[ roomName ]
-    })    
+    io.to( roomName ).emit( 'chat-members', rooms[ roomName ] )    
 }
 
 const addUserToRoom = ( roomName, id, username ) => {
