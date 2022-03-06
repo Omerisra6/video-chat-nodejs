@@ -1,32 +1,31 @@
 let rooms = {}
 
-exports.onConnection = ( id ) => { 
-    console.log( id + 'connected' )
+exports.socketConnection = ( id ) => { 
+    console.log( id + ' connected' )
 }
 
-exports.socketJoinRoom = ( data, id ) => {
+exports.socketJoinRoom = ( data, socket ) => {
 
     const { io } = require( './index.js' )
 
     const { roomName, username } = data
 
-    addUserToRoom( roomName, id, username )
+    addUserToRoom( roomName, socket.id, username )
     
+    socket.join( roomName )
 
     io.to( roomName ).emit( 'chat-members', ( rooms ) => {
 
         return rooms[ roomName ]
     })
-
-    
+   
 }
 
-exports.socketLeaveRoom = ( id  ) => {
+exports.socketLeaveRoom = ( socket  ) => {
 
-   
     const { io } = require( './index.js')
 
-    const roomName = removeUserFromRoom( id )
+    const roomName = removeUserFromRoom( socket.id )
 
     if ( ! roomName) {
         return
@@ -39,8 +38,6 @@ exports.socketLeaveRoom = ( id  ) => {
 }
 
 const addUserToRoom = ( roomName, id, username ) => {
-
-    const { rooms } = require( './index.js' )
 
     if( ! rooms[ roomName] ){
 
@@ -55,7 +52,6 @@ const addUserToRoom = ( roomName, id, username ) => {
 
 const removeUserFromRoom = ( id ) => {
 
-    let { rooms } = require( './index.js')
     const roomNames =  Object.keys( rooms )
     
     let roomName = null

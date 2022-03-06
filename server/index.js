@@ -23,23 +23,23 @@ io.listen( server, {
 	},
 });
 
-io.on( 'connection', ( socket) => {
+io.on( 'connection', ( socket ) => {
 
     socketConnection( socket.id )
 
     socket.on( 'join-room', ( data ) => {
 
-        socketJoinRoom( data, socket.id )
+        socketJoinRoom( data, socket )
     })
 
     socket.on( 'leave-room', () => {
 
-        socketLeaveRoom( socket.id )
+        socketLeaveRoom( socket )
     })
 
     socket.on( 'disconnect', () => {
 
-        socketLeaveRoom( socket.id )
+        socketLeaveRoom( socket )
     })  
 
 })
