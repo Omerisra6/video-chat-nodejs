@@ -1,6 +1,6 @@
 import styled from "styled-components"
 
-const StyledForm = styled.div`
+const StyledForm = styled.form`
     height: 60vh;
     flex-direction: column;
     gap: 2vh;
