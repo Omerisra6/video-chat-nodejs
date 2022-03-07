@@ -6,14 +6,14 @@ export default function useOnErrorEvents( ) {
     const socket = useSocket()
 
     useEffect( ( ) => {
-        socket.on( 'room-exists', () => {
+        socket.on( 'room-not-found', () => {
 
-            alert( 'room exists')
+            alert( 'room does not exists')
         })
       
         socket.on( 'room-taken', () => {
             
-            alert( 'room does not exists')
+            alert( 'room name allready in use')
         })
         
     }, [])

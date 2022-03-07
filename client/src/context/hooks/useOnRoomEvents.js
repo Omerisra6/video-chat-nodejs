@@ -7,11 +7,6 @@ export default function useOnRoomEvents( setUser ) {
 
     useEffect( ( ) => {
 
-        socket.on( 'room-created', ( username ) => {
-
-            setUser( username )
-        })
-
         socket.on( 'joined-room', ( username ) => {
 
             setUser( username )
