@@ -1,15 +1,17 @@
 import  { useEffect } from 'react';
-import { useSocket } from '../context/socket';
+import { useSocket } from '../socket';
 
-export default function useOnSocket( setMembers ) {
+export default function useOnChatEvents( setMembers , setError ) {
 
     const socket = useSocket()
 
     useEffect( ( ) => {
 
         socket.on( 'chat-members', ( members ) => {
+            
             setMembers( members )
         })
+
         
     }, [])
    
