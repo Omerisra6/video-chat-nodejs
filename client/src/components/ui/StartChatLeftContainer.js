@@ -9,7 +9,7 @@ export default function StartChatLeftContainer( { setUser } ) {
   return (
     <Container width='50%' background='#ffff' display='felx' centered={true}>
         <JoinChatForm setUser={setUser}/>
-        <CreateChatForm/>
+        <CreateChatForm setUser={setUser}/>
     </Container>
   )
 }

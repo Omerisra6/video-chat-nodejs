@@ -5,12 +5,15 @@ import StyledForm from './ui/styled/StyledForm'
 import StyledFormBottom from './ui/styled/StyledFormBottom'
 import StyledLink from './ui/styled/StyledLink'
 import Button from './ui/Button'
+import useOnErrorEvents from '../context/hooks/useOnErrorEvents'
 
 export default function JoinChatForm( { setUser } ) {
 
   const socket  = useSocket()
   const userRef = useRef( null )
   const roomRef = useRef( null )
+
+  useOnErrorEvents( )
 
   const onSubmit = ( event ) => {
 
@@ -20,12 +23,11 @@ export default function JoinChatForm( { setUser } ) {
     const roomName     = roomRef.current.value.trim()
 
     if ( ! username || ! roomName ) {
-        return
+      
+      return
     }
 
-    socket.emit( 'join-room', { roomName, username })
-
-    setUser( username )
+    socket.emit( 'join-room', { roomName, username } )
 
   }
 
