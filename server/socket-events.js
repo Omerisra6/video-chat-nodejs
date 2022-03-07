@@ -10,12 +10,39 @@ exports.socketJoinRoom = ( data, socket ) => {
 
     const { roomName, username } = data
 
+    if( ! rooms[ roomName ] ){
+
+        io.to( socket.id ).emit( 'error' )
+        return
+    }
+
     addUserToRoom( roomName, socket.id, username )
-    
+
     socket.join( roomName )
 
     io.to( roomName ).emit( 'chat-members', rooms[ roomName ] )
    
+}
+
+exports.socketCreateRoom = ( data, socket ) => {
+
+    const { io } = require( './index.js' )
+
+    const { roomName, username } = data
+
+    if( rooms[ roomName ] ){
+
+        io.to( socket.id ).emit( 'error' )
+        return
+    }
+
+    rooms[ roomName ] = []
+
+    addUserToRoom( roomName, socket.id, username )
+
+    socket.join( roomName )
+
+    io.to( roomName ).emit( 'chat-members', rooms[ roomName ] )
 }
 
 exports.socketLeaveRoom = ( socket  ) => {
@@ -32,16 +59,13 @@ exports.socketLeaveRoom = ( socket  ) => {
 }
 
 const addUserToRoom = ( roomName, id, username ) => {
-
-    if( ! rooms[ roomName] ){
-
-        rooms[ roomName ] = []
-    }
     
     const user = {}
     user[ id ] = username
 
     rooms[ roomName ].push( user )
+
+    return username
 }
 
 const removeUserFromRoom = ( id ) => {

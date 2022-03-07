@@ -13,6 +13,7 @@ app.use( express.static( './public' ) );
 
 const { socketConnection,
         socketJoinRoom, 
+        socketCreateRoom,
         socketLeaveRoom, 
 } = require( './socket-events.js' )
 
@@ -30,6 +31,11 @@ io.on( 'connection', ( socket ) => {
     socket.on( 'join-room', ( data ) => {
 
         socketJoinRoom( data, socket )
+    })
+
+    socket.on( 'create-room', ( data ) => {
+
+        socketCreateRoom( data, socket )
     })
 
     socket.on( 'leave-room', () => {
