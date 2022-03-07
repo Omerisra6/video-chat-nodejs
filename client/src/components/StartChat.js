@@ -23,7 +23,7 @@ export default function StartChat( { setUser } ) {
     <StyledStartChatWrapper>
 
       <StartChatLeftContainer setUser={setUser}/>
-      <StartChatRightContainer/>
+      <StartChatRightContainer />
       
     </StyledStartChatWrapper>
   )

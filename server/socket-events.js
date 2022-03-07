@@ -17,8 +17,9 @@ exports.socketJoinRoom = ( data, socket ) => {
     }
 
     addUserToRoom( roomName, socket.id, username )
-
+    
     socket.join( roomName )
+
     io.to( socket.id ).emit( 'joined-room', username )
     io.to( roomName ).emit( 'chat-members', rooms[ roomName ] )
    
