@@ -12,14 +12,14 @@ exports.socketJoinRoom = ( data, socket ) => {
 
     if( ! rooms[ roomName ] ){
 
-        io.to( socket.id ).emit( 'error' )
+        io.to( socket.id ).emit( 'room-not-found' )
         return
     }
 
     addUserToRoom( roomName, socket.id, username )
 
     socket.join( roomName )
-
+    io.to( socket.id ).emit( 'joined-room', username )
     io.to( roomName ).emit( 'chat-members', rooms[ roomName ] )
    
 }
@@ -32,7 +32,7 @@ exports.socketCreateRoom = ( data, socket ) => {
 
     if( rooms[ roomName ] ){
 
-        io.to( socket.id ).emit( 'error' )
+        io.to( socket.id ).emit( 'room-exists' )
         return
     }
 
@@ -42,6 +42,7 @@ exports.socketCreateRoom = ( data, socket ) => {
 
     socket.join( roomName )
 
+    io.to( socket.id ).emit( 'joined-room', username )
     io.to( roomName ).emit( 'chat-members', rooms[ roomName ] )
 }
 
