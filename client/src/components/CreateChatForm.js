@@ -5,8 +5,8 @@ import SerachBox from './ui/SearchBox'
 import StyledForm from './ui/styled/StyledForm'
 import StyledFormBottom from './ui/styled/StyledFormBottom'
 import StyledLink from './ui/styled/StyledLink'
-import useOnRoomEvents from '../context/hooks/useOnRoomEvents'
-import useOnErrorEvents from '../context/hooks/useOnErrorEvents'
+import useOnRoomEvents from '../hooks/useOnRoomEvents'
+import useOnErrorEvents from '../hooks/useOnErrorEvents'
 
 export default function CreateChatForm( { setUser } ) {
 

@@ -5,7 +5,7 @@ import StyledForm from './ui/styled/StyledForm'
 import StyledFormBottom from './ui/styled/StyledFormBottom'
 import StyledLink from './ui/styled/StyledLink'
 import Button from './ui/Button'
-import useOnErrorEvents from '../context/hooks/useOnErrorEvents'
+import useOnErrorEvents from '../hooks/useOnErrorEvents'
 
 export default function JoinChatForm( { setUser } ) {
 
