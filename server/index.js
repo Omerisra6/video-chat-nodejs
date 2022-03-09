@@ -3,13 +3,18 @@ const express = require( 'express' )
 const app = express()
 const io = require( 'socket.io' )()
 const PORT = process.env.PORT || 80;
+const { ExpressPeerServer } = require('peer');
 
-const server = app.listen( PORT, () => {
+const server = require('http').createServer(app);
 
-  console.log(`Server is listening on port ${PORT}`);
-});
+const peerServer = ExpressPeerServer(server, {debug: true,  allow_discovery: true,});
 
+app.use('/peerjs', peerServer);
 app.use( express.static( './public' ) );
+
+server.listen( PORT , () => {
+    console.log( 'Server litening to port ' + PORT )
+});
 
 const { socketConnection,
         socketJoinRoom, 
@@ -19,9 +24,12 @@ const { socketConnection,
 
 io.listen( server, {
 	cors: {
-		origin: '*',
-		methods: [ 'GET', 'POST' ],
+        origin: "*",
+        methods: ["GET", "POST"],
+        transports: ['websocket', 'polling'],
+        credentials: true
 	},
+    allowEIO3: true
 });
 
 io.on( 'connection', ( socket ) => {
