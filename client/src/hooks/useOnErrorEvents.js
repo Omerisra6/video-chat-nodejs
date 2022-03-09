@@ -1,5 +1,5 @@
 import  { useEffect } from 'react';
-import { useSocket } from '../socket';
+import { useSocket } from '../context/socket';
 
 export default function useOnErrorEvents( ) {
 

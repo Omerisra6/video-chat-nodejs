@@ -1,5 +1,5 @@
 import  { useEffect } from 'react';
-import { useSocket } from '../socket';
+import { useSocket } from '../context/socket';
 
 export default function useOnRoomEvents( setUser ) {
 
@@ -7,9 +7,9 @@ export default function useOnRoomEvents( setUser ) {
 
     useEffect( ( ) => {
 
-        socket.on( 'joined-room', ( username ) => {
+        socket.on( 'joined-room', ( user ) => {
 
-            setUser( username )
+            setUser( user[ 'username' ] )
         })
       
     }, [])
