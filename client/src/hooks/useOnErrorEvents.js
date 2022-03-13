@@ -11,7 +11,7 @@ export default function useOnErrorEvents( ) {
             alert( 'room does not exists')
         })
       
-        socket.on( 'room-taken', () => {
+        socket.on( 'room-exists', () => {
             
             alert( 'room name allready in use')
         })
