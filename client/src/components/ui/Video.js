@@ -1,5 +1,8 @@
 import React, { useEffect, useRef } from 'react'
-export default function Video( { stream } ) {
+import StyledVideoContainer from './styled/StyledVideoContainer';
+import StyledVideoWrapper from './styled/StyledVideoWrapper';
+
+export default function Video( { stream, name } ) {
 
     const videoRef = useRef()
 
@@ -10,8 +13,15 @@ export default function Video( { stream } ) {
     }, [ stream ]);
 
     return (
-        <div>
-           <video ref={ videoRef }></video>
-        </div>
+        <StyledVideoWrapper>
+            <StyledVideoContainer>
+
+                <video ref={ videoRef }></video>
+
+            </StyledVideoContainer> 
+
+            <h1> { name } </h1>
+        </StyledVideoWrapper>            
+        
     )
 }

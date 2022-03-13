@@ -21,3 +21,14 @@ body{
 :target{
     display: flex;
 }
+
+video {
+
+    min-width: 100%; 
+    min-height: 100%;
+    width: 100%    !important;
+    height: auto   !important;
+    z-index: -100;
+    background-size: cover;
+    overflow: hidden;
+}
