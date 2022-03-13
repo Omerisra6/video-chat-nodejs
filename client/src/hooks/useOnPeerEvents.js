@@ -6,23 +6,22 @@ export default function useOnPeerEvents( setStreams  ) {
 
     const socket = useSocket()
     const currentId = socket.id
+    console.log( currentId )
     const peer = new Peer( socket.id , {path: '/peerjs',host: '/',port: '8000',} );    
     
     useEffect( ( ) => {
 
-        navigator.mediaDevices.getUserMedia({audio: true,video: true,}).then((stream) => {   
+        navigator.mediaDevices.getUserMedia( { audio: true, video: true } ).then( ( stream ) => {   
             
-            setStreams( streams => [ ...streams, { stream, id: currentId }] )
+            setStreams( streams => [ ...streams, { stream, id: currentId } ] )
     
             peer.on( 'call', ( call ) => {
 
                 call.answer( stream );
-
                 call.on('stream', ( userVideoStream ) => {
 
-                    addStream( userVideoStream, call[ 'provider' ][ 'id' ] )
+                    addStream( userVideoStream, call[ 'peer' ] )
                 });
-
             
             })
 
@@ -52,11 +51,11 @@ export default function useOnPeerEvents( setStreams  ) {
     }
 
     const addStream = ( newStream, id ) => {
-    
+
         setStreams( streams => { 
-                    
+
             if ( ! streamExists( streams , newStream ) ) {
-    
+
                 return [ ...streams, { stream: newStream, id } ]    
             }
             
