@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { useSocket } from '../context/socket'
 import useOnChatEvents from '../hooks/useOnChatEvents'
 import useOnPeerEvents from '../hooks/useOnPeerEvents'
+import ChatBottom from './ui/ChatBottom'
+import StyledChatContainer from './ui/styled/StyledChatContainer'
 import StyledStreamsContainer from './ui/styled/StyledStreamsContainer'
 import Video from './ui/Video'
 
@@ -10,21 +12,29 @@ export default function Chat( { user, setUser } ) {
   const [ members, setMembers ] = useState( [] )
   const [ streams, setStreams ] = useState( [] )
   const currentId = useSocket().id
+
   useOnChatEvents( setMembers )
   useOnPeerEvents( setStreams )
 
   return (
 
-    <StyledStreamsContainer>
+      <StyledChatContainer>
+
+        <StyledStreamsContainer>
+          
+          { streams.map( stream => {
+
+            const name = getNameById( stream[ 'id' ], currentId )
+            return <Video stream={stream} name={ name }/>
+
+          })}
+
+        </StyledStreamsContainer> 
+
+        <ChatBottom setUser={setUser}/>
+
+      </StyledChatContainer>
       
-      { streams.map( stream => {
-
-        const name = getNameById( stream[ 'id' ], currentId )
-        return <Video stream={stream} name={ name }/>
-
-      })}
-
-    </StyledStreamsContainer> 
     
   )
 
@@ -32,7 +42,7 @@ export default function Chat( { user, setUser } ) {
   function getNameById ( id, currentId ) {
 
     if ( currentId === id) {
-      return user
+      return 'You'
     }
 
     let name

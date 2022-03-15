@@ -54,7 +54,7 @@ const StyledButton = styled.button`
 
     --font-size-sm: 0.4vw;
     --padding-sm: 0.5vw;
-    --width-sm: 3vw;
+    --width-sm: 5vw;
     --min-width-md: 10px;
 
     --font-size-md: 0.5vw;
@@ -76,8 +76,7 @@ const StyledButton = styled.button`
     --background-color: var( ${ ( { color } ) => colorsMap[ color ].background } );
     --border-color: var( ${ ( { color } ) => colorsMap[ color ].border } );
     --width: var( ${ ( { size } ) => sizesMap[ size ].width } );
-    --
-    --height: var( ${ ( { size } ) => sizesMap[ size ].height } );
+    --height: var( ${ ( { circle } ) => circle ? ( { size } ) => sizesMap[ size ].width : ( { size } ) => sizesMap[ size ].height } );
 
     padding: var( --padding );
     color: var( --color );
@@ -85,12 +84,13 @@ const StyledButton = styled.button`
     width: var( --width );
     height: var( --height );
     border: none;
-    border-radius: 6px;
+    border-radius: ${ ( { circle } ) => circle ? '50%' : '6px' } ;
     cursor: pointer;
 `
 StyledButton.defaultProps = {
     color: 'light',
     size: 'md',
+    circle: false,
 };
 
 StyledButton.propTypes ={
@@ -103,6 +103,11 @@ StyledButton.propTypes ={
     color: PropTypes.oneOf([
         'light',
         'dark',
+    ]),
+
+    circle: PropTypes.oneOf([
+        true,
+        false
     ])
 }
 

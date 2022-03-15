@@ -5,5 +5,6 @@ const StyledStreamsContainer = styled.div`
     flex-basis: auto;
     flex-wrap: wrap;
     overflow: hidden;
+    margin-bottom: auto;
 `
 export default StyledStreamsContainer
