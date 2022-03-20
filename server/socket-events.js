@@ -4,7 +4,7 @@ exports.socketConnection = ( id ) => {
     console.log( id + ' connected' )
 }
 
-exports.socketJoinRoom = ( data, socket ) => {
+exports.socketJoinRoom   = ( data, socket ) => {
 
     const { io } = require( './index.js' )
 
@@ -48,7 +48,7 @@ exports.socketCreateRoom = ( data, socket ) => {
     io.to( roomName ).emit( 'chat-members', rooms[ roomName ] )
 }
 
-exports.socketLeaveRoom = ( socket  ) => {
+exports.socketLeaveRoom  = ( socket  ) => {
 
     const { io } = require( './index.js')
 
@@ -60,6 +60,24 @@ exports.socketLeaveRoom = ( socket  ) => {
 
     io.to( roomName ).emit( 'chat-members', rooms[ roomName ] )    
     io.to( roomName ).emit( 'left-room', socket.id)
+}
+
+exports.socketAudio      = ( socket ) => {
+
+    const { io } = require( './index.js' )
+    
+    const id  = socket.id
+
+    io.to( id ).emit( 'audio' );
+}
+
+exports.socketVideo      = ( socket ) => {
+
+    const { io } = require( './index.js' )
+    
+    const id  = socket.id
+
+    io.to( id ).emit( 'video' );
 }
 
 const addUserToRoom = ( roomName, id, username ) => {
