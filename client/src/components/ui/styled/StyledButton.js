@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { ThemeConsumer } from 'styled-components'
 import PropTypes from 'prop-types'
 
 
@@ -37,20 +37,28 @@ const colorsMap ={
         background: '--color-light',
         border: '--color-light',
         text: '--color-dark',
-        backgroundHover: '--color-dark',
+        backgroundHover: '--color-theme',
     },
     white: {
         background: '--color-white',
         border: '--color-white',
         text: '--color-dark',
         backgroundHover: '--color-dark',
+    },
+    theme: {
+        background: '--color-theme',
+        border: '--color-theme',
+        text: '--color-dark',
+        backgroundHover: '--color-light'
     }
+    
 }
 
 const StyledButton = styled.button`
     --color-dark: #000;
     --color-light: #f5f4f5;
     --color-white: #fff;
+    --color-theme: #FFEDE1;
 
     --font-size-sm: 0.4vw;
     --padding-sm: 0.5vw;
@@ -77,6 +85,7 @@ const StyledButton = styled.button`
     --border-color: var( ${ ( { color } ) => colorsMap[ color ].border } );
     --width: var( ${ ( { size } ) => sizesMap[ size ].width } );
     --height: var( ${ ( { circle } ) => circle ? ( { size } ) => sizesMap[ size ].width : ( { size } ) => sizesMap[ size ].height } );
+    --hover: var( ${ ( { color } ) => colorsMap[ color ].backgroundHover } );
 
     padding: var( --padding );
     color: var( --color );
@@ -86,6 +95,11 @@ const StyledButton = styled.button`
     border: none;
     border-radius: ${ ( { circle } ) => circle ? '50%' : '6px' } ;
     cursor: pointer;
+
+    &:hover{
+
+        background-color: var( --hover );
+    }
 `
 StyledButton.defaultProps = {
     color: 'light',
@@ -103,6 +117,8 @@ StyledButton.propTypes ={
     color: PropTypes.oneOf([
         'light',
         'dark',
+        'white',
+        'theme'
     ]),
 
     circle: PropTypes.oneOf([

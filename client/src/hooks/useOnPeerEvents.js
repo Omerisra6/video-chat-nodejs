@@ -7,7 +7,7 @@ export default function useOnPeerEvents( setStreams  ) {
 
     const socket = useSocket()
     const currentId = socket.id
-    const peer = new Peer( socket.id , { path: '/peerjs',host: '/',port: '8000' } );    
+    const peer = new Peer( socket.id , { path: '/peerjs',host: '/',port: '80' } );    
     
     useEffect( ( ) => {
 
@@ -37,6 +37,18 @@ export default function useOnPeerEvents( setStreams  ) {
             socket.on( 'left-room', ( id ) => {
 
                 removeStream( id, setStreams )
+            })
+
+            //Mutes/Unmutes stream
+            socket.on( 'audio', () => {
+
+                stream.getAudioTracks().forEach( track => track.enabled = !track.enabled )
+            })
+
+            //Enables/Disable video stream
+            socket.on( 'video', () => {
+
+                stream.getVideoTracks().forEach( track => track.enabled = !track.enabled )
             })
         })
       

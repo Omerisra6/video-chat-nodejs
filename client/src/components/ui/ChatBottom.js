@@ -1,6 +1,6 @@
 import React from 'react'
 import EnableDisableVideo from './EnableDisableVideo'
-import EnanleDisableMic from './EnanleDisableMic'
+import EnanleDisableAudio from './EnanleDisableAudio'
 import EndCall from './EndCall'
 import StyledChatActionsContainer from './styled/StyledChatActionsContainer'
 import StyledChatBottom from './styled/StyledChatBottom'
@@ -12,7 +12,7 @@ export default function ChatBottom( { setUser } ) {
 
           <EnableDisableVideo/>
           <EndCall setUser={setUser}/>
-          <EnanleDisableMic/>
+          <EnanleDisableAudio/>
           
         </StyledChatActionsContainer>
     </StyledChatBottom>

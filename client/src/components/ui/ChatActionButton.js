@@ -1,11 +1,11 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import Button from './Button'
 
-export default function ChatActionButton( { iconDefault, iconToggle, onClickDefault, onClickToggle } ) {
+export default function ChatActionButton( { iconDefault, iconToggle, onClickDefault, onClickToggle} ) {
 
     const iconRef = useRef( null )
+    const [ color, setColor ] = useState( 'light' )
 
-    //Toggles between icon classes 
     const onClick = () => {
 
         //Handles icon with no toggle
@@ -14,22 +14,25 @@ export default function ChatActionButton( { iconDefault, iconToggle, onClickDefa
             return
         }
 
-        const icon = iconRef.current.innerHTML
+        const icon = iconRef.current
      
 
-        if ( icon === iconDefault  ) {
+        if ( icon.innerHTML == iconDefault  ) {
+
             icon.innerHTML = iconToggle
-            onClickToggle()    
+            setColor( 'theme' )
+            onClickDefault()
             return
         }
 
-        icon = iconDefault
-        onClickDefault()
+        icon.innerHTML = iconDefault
+        setColor( 'light' )
+        onClickToggle()
     }
 
     return (
-        <Button onClick={ onClick } circle={ true } size='sm'>
-            <span className='material-icons' ref={iconRef}> { iconDefault} </span> 
+        <Button onClick={ onClick } circle={ true } color={color} size='sm' >
+            <span className='material-icons' ref={iconRef}>{iconDefault}</span> 
         </Button>
     )
 }
