@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import { useSocket } from '../../context/socket';
+import StyledName from './styled/StyledName';
 import StyledVideoContainer from './styled/StyledVideoContainer';
 import StyledVideoWrapper from './styled/StyledVideoWrapper';
 
@@ -24,10 +25,9 @@ export default function Video( { stream, name } ) {
             <StyledVideoContainer>
 
                 <video ref={ videoRef }></video>
+                <StyledName> { name } </StyledName>
 
             </StyledVideoContainer> 
-
-            <h1> { name } </h1>
         </StyledVideoWrapper>            
         
     )

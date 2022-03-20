@@ -5,7 +5,7 @@ const StyledChatBottom = styled.div`
     justify-content: center;
     align-items: center;
     padding: 1vh 2vw;
-    background-color: #ffff;
+    background-color: #FFFF;
 `
 
 export default StyledChatBottom
