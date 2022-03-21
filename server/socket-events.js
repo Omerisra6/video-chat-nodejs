@@ -6,6 +6,7 @@ exports.socketConnection = ( id ) => {
 }
 
 exports.socketJoinRoom   = ( data, socket ) => {
+    console.log( rooms )
 
     const { io } = require( './index.js' )
 
@@ -22,7 +23,7 @@ exports.socketJoinRoom   = ( data, socket ) => {
     socket.join( roomId )
 
     const roomName = rooms[ roomId ][ 'roomName' ]
-    io.to( roomId ).emit( 'joined-room', { username, id, room:{ roomName, roomId } } )
+    io.to( roomId ).emit( 'joined-room', { username, id, room:{ name: roomName, id: roomId } } )
     io.to( roomId ).emit( 'chat-members', rooms[ roomId ][ 'users' ] )
    
 }
@@ -48,8 +49,9 @@ exports.socketCreateRoom = ( data, socket ) => {
 
     socket.join( roomId )
 
-    io.to( roomId ).emit( 'joined-room', { username, id, room:{ roomName, roomId } } )
+    io.to( roomId ).emit( 'joined-room', { username, id, room:{ name: roomName, id: roomId } } )
     io.to( roomId ).emit( 'chat-members', rooms[ roomId ][ 'users' ] )
+
 }
 
 exports.socketLeaveRoom  = ( socket  ) => {
