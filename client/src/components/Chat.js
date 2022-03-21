@@ -17,7 +17,6 @@ export default function Chat( { user, room, setUser, setRoom } ) {
   useOnChatEvents( setMembers )
   useOnPeerEvents( setStreams )
 
-  console.log( room )
   return (
 
       <StyledChatContainer>

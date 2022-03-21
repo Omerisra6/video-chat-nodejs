@@ -6,7 +6,6 @@ exports.socketConnection = ( id ) => {
 }
 
 exports.socketJoinRoom   = ( data, socket ) => {
-    console.log( rooms )
 
     const { io } = require( './index.js' )
 
@@ -29,7 +28,6 @@ exports.socketJoinRoom   = ( data, socket ) => {
 }
 
 exports.socketCreateRoom = ( data, socket ) => {
-
     const { io }   = require( './index.js' )
     const { v4 } = require( 'uuid' );
 
@@ -55,12 +53,11 @@ exports.socketCreateRoom = ( data, socket ) => {
 }
 
 exports.socketLeaveRoom  = ( socket  ) => {
-
     const { io } = require( './index.js')
 
     const roomId = removeUserFromRoom( socket.id )
 
-    if ( ! roomId) {
+    if ( ! rooms[ roomId ]) {
         return
     }
 
@@ -101,23 +98,23 @@ const removeUserFromRoom = ( id ) => {
     const roomIds =  Object.keys( rooms )
     
     let roomId = null
-    roomIds.forEach( id => {
+    roomIds.forEach( room => {
         
         //Removes user from room
-        rooms[ id ][ 'users' ] = rooms[ id ][ 'users' ].filter(  user => {
+        rooms[ room ][ 'users' ] = rooms[ room ][ 'users' ].filter(  user => {
 
             if ( Object.keys( user )[0] !== id.toString() ) {
                 return true
             }
 
-            roomId = id
+            roomId = room
             return false
         })
         
     });
 
     //Deletes empty rooms if exists
-    rooms = Object.fromEntries( Object.entries( rooms ).filter( ( [ _, v ] ) => ! v[ 'users' ] ) );
-
+    rooms = Object.fromEntries( Object.entries( rooms ).filter( ( [ _, v ] ) => v[ 'users' ].length !== 0 ) );
+    console.log( rooms )
     return roomId
 }
