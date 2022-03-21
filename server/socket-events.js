@@ -1,6 +1,7 @@
 let rooms = {}
 
 exports.socketConnection = ( id ) => { 
+
     console.log( id + ' connected' )
 }
 
@@ -8,58 +9,61 @@ exports.socketJoinRoom   = ( data, socket ) => {
 
     const { io } = require( './index.js' )
 
-    const { roomName, username } = data
+    const { roomId, username } = data
     const id = socket.id
-    if( ! rooms[ roomName ] ){
+    if( ! rooms[ roomId ] ){
 
         io.to( id ).emit( 'room-not-found' )
         return
     }
 
-    addUserToRoom( roomName, id, username )
+    addUserToRoom( roomId, id, username )
     
-    socket.join( roomName )
+    socket.join( roomId )
 
-    io.to( roomName ).emit( 'joined-room', { username, id } )
-    io.to( roomName ).emit( 'chat-members', rooms[ roomName ] )
+    const roomName = rooms[ roomId ][ 'roomName' ]
+    io.to( roomId ).emit( 'joined-room', { username, id, room:{ roomName, roomId } } )
+    io.to( roomId ).emit( 'chat-members', rooms[ roomId ][ 'users' ] )
    
 }
 
 exports.socketCreateRoom = ( data, socket ) => {
 
-    const { io } = require( './index.js' )
+    const { io }   = require( './index.js' )
+    const { v4 } = require( 'uuid' );
 
     const { roomName, username } = data
     const id = socket.id
+    const roomId = v4()
 
-    if( rooms[ roomName ] ){
+    if( rooms[ roomId ] ){
 
         io.to( id ).emit( 'room-exists' )
         return
     }
 
-    rooms[ roomName ] = []
+    rooms[ roomId ] = { roomName, users : [] }
 
-    addUserToRoom( roomName, id, username )
+    addUserToRoom( roomId, id, username )
 
-    socket.join( roomName )
+    socket.join( roomId )
 
-    io.to( roomName ).emit( 'joined-room', { username, id } )
-    io.to( roomName ).emit( 'chat-members', rooms[ roomName ] )
+    io.to( roomId ).emit( 'joined-room', { username, id, room:{ roomName, roomId } } )
+    io.to( roomId ).emit( 'chat-members', rooms[ roomId ][ 'users' ] )
 }
 
 exports.socketLeaveRoom  = ( socket  ) => {
 
     const { io } = require( './index.js')
 
-    const roomName = removeUserFromRoom( socket.id )
+    const roomId = removeUserFromRoom( socket.id )
 
-    if ( ! roomName) {
+    if ( ! roomId) {
         return
     }
 
-    io.to( roomName ).emit( 'chat-members', rooms[ roomName ] )    
-    io.to( roomName ).emit( 'left-room', socket.id)
+    io.to( roomId ).emit( 'left-room', socket.id )
+    io.to( roomId ).emit( 'chat-members', rooms[ roomId ][ 'users' ] )    
 }
 
 exports.socketAudio      = ( socket ) => {
@@ -80,38 +84,38 @@ exports.socketVideo      = ( socket ) => {
     io.to( id ).emit( 'video' );
 }
 
-const addUserToRoom = ( roomName, id, username ) => {
+const addUserToRoom = ( roomId, id, username ) => {
     
     const user = {}
     user[ id ] = username
 
-    rooms[ roomName ].push( user )
+    rooms[ roomId ][ 'users' ].push( user )
 
     return username
 }
 
 const removeUserFromRoom = ( id ) => {
 
-    const roomNames =  Object.keys( rooms )
+    const roomIds =  Object.keys( rooms )
     
-    let roomName = null
-    roomNames.forEach( room => {
+    let roomId = null
+    roomIds.forEach( id => {
         
         //Removes user from room
-        rooms[ room ] = rooms[ room ].filter(  user => {
+        rooms[ id ][ 'users' ] = rooms[ id ][ 'users' ].filter(  user => {
 
             if ( Object.keys( user )[0] !== id.toString() ) {
                 return true
             }
 
-            roomName = room
+            roomId = id
             return false
         })
         
     });
 
     //Deletes empty rooms if exists
-    rooms = Object.fromEntries(Object.entries( rooms ).filter(([_, v]) => v != null));
+    rooms = Object.fromEntries( Object.entries( rooms ).filter( ( [ _, v ] ) => ! v[ 'users' ] ) );
 
-    return roomName
+    return roomId
 }
