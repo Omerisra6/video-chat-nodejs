@@ -6,10 +6,11 @@ import {SocketContext, socket} from './context/socket';
 function App() {
 
   const [ user, setUser ] = useState( '' )
+  const [ room, setRoom ] = useState( '' )
 
   return (
     <SocketContext.Provider value={socket}>
-      { user ? <Chat user={user} setUser={setUser}/> :  <StartChat setUser={setUser}/> }
+      { user && room ? <Chat user={user} room={room} setUser={setUser} setRoom={setRoom}/> :  <StartChat setUser={setUser} setRoom={setRoom}/> }
     </SocketContext.Provider>
   );
 }

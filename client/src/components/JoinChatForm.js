@@ -5,29 +5,26 @@ import StyledForm from './ui/styled/StyledForm'
 import StyledFormBottom from './ui/styled/StyledFormBottom'
 import StyledLink from './ui/styled/StyledLink'
 import Button from './ui/Button'
-import useOnErrorEvents from '../hooks/useOnErrorEvents'
 
-export default function JoinChatForm( { setUser } ) {
+export default function JoinChatForm( ) {
 
   const socket  = useSocket()
   const userRef = useRef( null )
   const roomRef = useRef( null )
-
-  useOnErrorEvents( )
 
   const onSubmit = ( event ) => {
 
     event.preventDefault()
 
     const username = userRef.current.value.trim()
-    const roomName     = roomRef.current.value.trim()
+    const roomId   = roomRef.current.value.trim()
 
-    if ( ! username || ! roomName ) {
+    if ( ! username || ! roomId ) {
       
       return
     }
 
-    socket.emit( 'join-room', { roomName, username } )
+    socket.emit( 'join-room', { roomId, username } )
 
   }
 
@@ -37,7 +34,7 @@ export default function JoinChatForm( { setUser } ) {
       <h2> Join A Chat </h2>
 
       <SerachBox label='Username' className='username' size='md' inputRef={userRef}/>
-      <SerachBox label='Room name' size='md' inputRef={roomRef}/>
+      <SerachBox label='Room PIN' size='md' inputRef={roomRef}/>
 
       <StyledFormBottom>
 

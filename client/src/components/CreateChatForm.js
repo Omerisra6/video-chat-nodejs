@@ -5,18 +5,14 @@ import SerachBox from './ui/SearchBox'
 import StyledForm from './ui/styled/StyledForm'
 import StyledFormBottom from './ui/styled/StyledFormBottom'
 import StyledLink from './ui/styled/StyledLink'
-import useOnRoomEvents from '../hooks/useOnRoomEvents'
-import useOnErrorEvents from '../hooks/useOnErrorEvents'
 
-export default function CreateChatForm( { setUser } ) {
+export default function CreateChatForm( ) {
 
   const socket  = useSocket()
   const userRef = useRef( null )
   const roomRef = useRef( null )
 
-  useOnErrorEvents( )
-  useOnRoomEvents( setUser )
-
+  
   const onSubmit = ( event ) => {
 
     event.preventDefault()
@@ -39,7 +35,7 @@ export default function CreateChatForm( { setUser } ) {
       <h2> Create A Chat </h2>
 
       <SerachBox label='Username' className='username' size='md' inputRef={userRef}/>
-      <SerachBox label='Room Name' size='md'inputRef={roomRef}/>
+      <SerachBox label='Room name' size='md'inputRef={roomRef}/>
 
       <StyledFormBottom>
 

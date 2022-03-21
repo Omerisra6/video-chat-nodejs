@@ -7,7 +7,7 @@ import StyledChatContainer from './ui/styled/StyledChatContainer'
 import StyledStreamsContainer from './ui/styled/StyledStreamsContainer'
 import Video from './ui/Video'
 
-export default function Chat( { user, setUser } ) {
+export default function Chat( { user, room, setUser, setRoom } ) {
 
   const [ members, setMembers ] = useState( [] )
   const [ streams, setStreams ] = useState( [] )
@@ -16,6 +16,7 @@ export default function Chat( { user, setUser } ) {
   useOnChatEvents( setMembers )
   useOnPeerEvents( setStreams )
 
+  console.log( room )
   return (
 
       <StyledChatContainer>

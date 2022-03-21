@@ -1,8 +1,10 @@
+import useOnErrorEvents from '../hooks/useOnErrorEvents';
+import useOnRoomEvents from '../hooks/useOnRoomEvents';
 import StartChatLeftContainer from './ui/StartChatLeftContainer'
 import StartChatRightContainer from './ui/StartChatRightContainer'
 import StyledStartChatWrapper from './ui/styled/StyledStartChatWrapper'
 
-export default function StartChat( { setUser } ) {
+export default function StartChat( { setUser, setRoom } ) {
 
   
   if( window.location != 'http://localhost:3000/#create-chat' ){
@@ -17,12 +19,13 @@ export default function StartChat( { setUser } ) {
     }
   });
   
+  useOnErrorEvents( )
+  useOnRoomEvents( setUser, setRoom )
 
-  
   return (
     <StyledStartChatWrapper>
 
-      <StartChatLeftContainer setUser={setUser}/>
+      <StartChatLeftContainer/>
       <StartChatRightContainer />
       
     </StyledStartChatWrapper>

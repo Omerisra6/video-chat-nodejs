@@ -1,15 +1,16 @@
 import  { useEffect } from 'react';
 import { useSocket } from '../context/socket';
 
-export default function useOnRoomEvents( setUser ) {
+export default function useOnRoomEvents( setUser, setRoom ) {
 
     const socket = useSocket()
 
     useEffect( ( ) => {
 
-        socket.on( 'joined-room', ( user ) => {
+        socket.on( 'joined-room', ( data ) => {
 
-            setUser( user[ 'username' ] )
+            setUser( data[ 'username' ] )
+            setRoom( data[ 'room' ] )
         })
       
     }, [])
