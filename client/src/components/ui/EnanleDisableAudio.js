@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSocket } from '../../context/socket'
-import ChatActionButton from './ChatActionButton'
+import ToggleButton from './ToggleButton'
 
 export default function EnanleDisableAudio( { setAudio } ) {
 
@@ -12,6 +12,6 @@ export default function EnanleDisableAudio( { setAudio } ) {
   }
   return (
 
-    <ChatActionButton iconDefault='mic_off' iconToggle='mic' onClickDefault={onClick} onClickToggle={onClick}/>
+    <ToggleButton iconDefault='mic_off' iconToggle='mic' onClickDefault={onClick} onClickToggle={onClick}/>
   )
 }

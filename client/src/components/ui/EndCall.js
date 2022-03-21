@@ -1,7 +1,7 @@
 
 import React from 'react'
 import { useSocket } from '../../context/socket'
-import ChatActionButton from './ChatActionButton'
+import ToggleButton from './ToggleButton'
 
 export default function EndCall( { setUser } ) {
 
@@ -13,6 +13,6 @@ export default function EndCall( { setUser } ) {
     }
 
     return (
-        <ChatActionButton iconDefault="call_end" onClickDefault={onClick}/>
+        <ToggleButton iconDefault="call_end" onClickDefault={onClick}/>
     )
 }

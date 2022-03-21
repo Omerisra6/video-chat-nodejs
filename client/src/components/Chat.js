@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useSocket } from '../context/socket'
 import useOnChatEvents from '../hooks/useOnChatEvents'
 import useOnPeerEvents from '../hooks/useOnPeerEvents'
+import ChatTop from './ui/ChatTop'
 import ChatBottom from './ui/ChatBottom'
 import StyledChatContainer from './ui/styled/StyledChatContainer'
 import StyledStreamsContainer from './ui/styled/StyledStreamsContainer'
@@ -20,6 +21,8 @@ export default function Chat( { user, room, setUser, setRoom } ) {
   return (
 
       <StyledChatContainer>
+
+        <ChatTop room={room}/>
 
         <StyledStreamsContainer>
           

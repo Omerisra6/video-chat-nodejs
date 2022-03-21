@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSocket } from '../../context/socket'
-import ChatActionButton from './ChatActionButton'
+import ToggleButton from './ToggleButton'
 
 export default function EnableDisableVideo( { setVideo } ) {
 
@@ -13,6 +13,6 @@ export default function EnableDisableVideo( { setVideo } ) {
 
   return (
     
-    <ChatActionButton iconDefault='videocam_off' iconToggle='videocam' onClickDefault={onClick} onClickToggle={onClick}  />
+    <ToggleButton iconDefault='videocam_off' iconToggle='videocam' onClickDefault={onClick} onClickToggle={onClick}  />
   )
 }

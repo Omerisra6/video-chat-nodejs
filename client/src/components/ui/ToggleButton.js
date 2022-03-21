@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import Button from './Button'
 
-export default function ChatActionButton( { iconDefault, iconToggle, onClickDefault, onClickToggle} ) {
+export default function ToggleButton( { iconDefault, iconToggle, onClickDefault, onClickToggle} ) {
 
     const iconRef = useRef( null )
     const [ color, setColor ] = useState( 'light' )
