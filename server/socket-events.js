@@ -7,7 +7,7 @@ exports.socketConnection = ( id ) => {
 exports.socketJoinRoom   = ( data, socket ) => {
 
     const { io } = require( './index.js' )
-    const { isRoomExists, addUserToRoom, getRoom } = require( './socket-helpers.js')
+    const { isRoomExists, addUserToRoom, getRoom } = require( './socket-events-helpers.js')
 
     const { roomId, username } = data
     const id = socket.id
@@ -31,7 +31,7 @@ exports.socketJoinRoom   = ( data, socket ) => {
 exports.socketCreateRoom = ( data, socket ) => {
 
     const { io }   = require( './index.js' )
-    const { createNewRoom, addUserToRoom, getRoom } = require( './socket-helpers.js')
+    const { createNewRoom, addUserToRoom, getRoom } = require( './socket-events-helpers.js')
 
     const { roomName, username } = data
     const id = socket.id
@@ -48,7 +48,7 @@ exports.socketCreateRoom = ( data, socket ) => {
 exports.socketLeaveRoom  = ( socket  ) => {
 
     const { io } = require( './index.js')
-    const { removeUserFromRoom, isRoomExists, getRoom } = require( './socket-helpers.js')
+    const { removeUserFromRoom, isRoomExists, getRoom } = require( './socket-events-helpers.js')
 
     const roomId = removeUserFromRoom( socket.id )
 
