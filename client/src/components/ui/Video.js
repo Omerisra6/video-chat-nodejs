@@ -8,27 +8,32 @@ export default function Video( { stream, name } ) {
 
     const videoRef = useRef()
     const socketId = useSocket().id
+    const streamObj = stream[ 'stream']
 
     useEffect( () => {
 
-        videoRef.current.srcObject = stream[ 'stream' ]
+        videoRef.current.srcObject = streamObj
         videoRef.current.play()
 
         if ( socketId === stream[ 'id' ] ) {
 
             videoRef.current.muted = true
         }
-    }, [ stream ]);
+
+    }, [ stream, name ]);
+
 
     return (
         <StyledVideoWrapper>
             <StyledVideoContainer>
-
-                <video ref={ videoRef }></video>
+                
+                <video ref={ videoRef }></video> 
+              
                 <StyledName> { name } </StyledName>
 
-            </StyledVideoContainer> 
-        </StyledVideoWrapper>            
+            </StyledVideoContainer>
+
+        </StyledVideoWrapper> 
         
     )
 }

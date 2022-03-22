@@ -1,7 +1,7 @@
 import  { useEffect } from 'react';
 import { useSocket } from '../context/socket';
 
-export default function useOnChatEvents( setMembers , setError ) {
+export default function useOnChatEvents( setMembers ) {
 
     const socket = useSocket()
 
