@@ -97,8 +97,8 @@ const removeUserFromRoom = ( id ) => {
 
     const roomIds =  Object.keys( rooms )
     
-    let roomId = null
-    roomIds.forEach( room => {
+    let roomId 
+    roomIds.every( ( room, index ) => {
         
         //Removes user from room
         rooms[ room ][ 'users' ] = rooms[ room ][ 'users' ].filter(  user => {
@@ -110,11 +110,32 @@ const removeUserFromRoom = ( id ) => {
             roomId = room
             return false
         })
+
+        //Deletes room if exists
+        if ( roomId ) {
+
+            deleteRoomIfEmpty( index )
+            return false
+        }
+
+        return true
         
     });
 
-    //Deletes empty rooms if exists
-    rooms = Object.fromEntries( Object.entries( rooms ).filter( ( [ _, v ] ) => v[ 'users' ].length !== 0 ) );
-    console.log( rooms )
+  
     return roomId
+}
+
+const deleteRoomIfEmpty = ( index ) => {
+
+    const roomsArray = Object.entries(rooms)
+
+    if ( roomsArray[ index ][ 1 ][ 'users' ].length === 0 ) {
+        roomsArray.splice( index, 1 )
+        rooms = Object.fromEntries( roomsArray )
+    }
+
+    console.log( rooms )
+ 
+
 }
