@@ -1,17 +1,25 @@
-import { useState } from "react";
 import Chat from "./components/Chat";
 import StartChat from "./components/StartChat";
-import {SocketContext, socket} from './context/socket';
+import { useAppSettings } from "./context/appSettings";
+import { VideoSettingsProvider } from "./context/videoSettings";
 
 function App() {
 
-  const [ user, setUser ] = useState( '' )
-  const [ room, setRoom ] = useState( '' )
-
+  const { user , room } = useAppSettings()
   return (
-    <SocketContext.Provider value={socket}>
-      { user && room ? <Chat user={user} room={room} setUser={setUser} setRoom={setRoom}/> :  <StartChat setUser={setUser} setRoom={setRoom}/> }
-    </SocketContext.Provider>
+    <>
+      { user && room 
+        ? 
+        <VideoSettingsProvider>
+            <Chat/> 
+        </VideoSettingsProvider>
+        :
+        <StartChat/>
+      }
+    </>
+    
+      
+    
   );
 }
 

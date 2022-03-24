@@ -8,34 +8,35 @@ import StyledChatContainer from './ui/styled/StyledChatContainer'
 import StyledStreamsContainer from './ui/styled/StyledStreamsContainer'
 import Connecting from './ui/Connecting'
 import Video from './ui/Video'
+import { useAppSettings } from '../context/appSettings'
 
-export default function Chat( { user, room, setUser, setRoom } ) {
+export default function Chat(  ) {
 
-  const [ members, setMembers ] = useState( [] )
+  const { members }             = useOnChatEvents()
+  const { room }        = useAppSettings()  
   const [ streams, setStreams ] = useState( [] )
   const [ loading, setLoading ] = useState( true )
 
-  const currentId = useSocket().id
+  const { id: currentId } = useSocket();
 
-  useOnChatEvents( setMembers )
-  useOnPeerEvents( setStreams )
+  
+  useOnPeerEvents( setStreams, room[ 'id' ] )
 
-  useEffect( () => { 
+  useEffect( () => {
 
-
-    if ( streams.length === members.length && members.length !== 0 ) {
+    if ( members.length && streams.length === members.length ) {
       
       setLoading( false )
     }
 
-  }, [ streams, members])
+  }, [ streams, members ] )
 
   return (
-    
+
     loading ? <Connecting/> :
     <StyledChatContainer>
       
-      <ChatTop room={room}/>
+      <ChatTop/>
 
       <StyledStreamsContainer>
         
@@ -48,7 +49,7 @@ export default function Chat( { user, room, setUser, setRoom } ) {
 
       </StyledStreamsContainer> 
 
-      <ChatBottom setUser={setUser}/>
+      <ChatBottom />
 
     </StyledChatContainer>
   
@@ -62,17 +63,10 @@ export default function Chat( { user, room, setUser, setRoom } ) {
       return 'You'
     }
 
-    let name
-    members.every( member => {
-
-      if ( Object.keys( member )[ 0 ] === id ) {
-        name =  Object.values( member )[ 0 ]
-        return false
-      }
-      
-      return true
+    const member = members.find( member => {
+      return Object.keys( member )[ 0 ] === id;
     });
 
-    return name
+    return  Object.values( member )[ 0 ];
   }
 }
