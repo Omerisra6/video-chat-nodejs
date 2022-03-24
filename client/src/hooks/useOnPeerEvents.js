@@ -1,20 +1,23 @@
 import Peer from 'peerjs';
-import  { useEffect, useRef } from 'react';
+import  { useEffect, useRef, useState } from 'react';
 import { useAppSettings } from '../context/appSettings';
 import { useSocket } from '../context/socket';
 import { useVideoSettings } from '../context/videoSettings';
 import { addStream, removeStream, connectToNewUser } from '../helpers/peerHelpers'; 
 
-export default function useOnPeerEvents( setStreams ) {
+export default function useOnPeerEvents( ) {
 
     const socket = useSocket()
-    const currentId = socket.id
     const stream = useRef( null );
     const { audio, video } = useVideoSettings()
     const { room } = useAppSettings()
+    const [ streams, setStreams ] = useState( [] )
+
+    const currentId = socket.id
     const roomId = room[ 'id' ]
     const peer = new Peer( socket.id , { path: '/peerjs', host: '/',port: '80' } );
 
+    //Handles stream audio and video by stream ref
     useEffect( () => {
 
         if ( stream.current ) {
@@ -43,7 +46,7 @@ export default function useOnPeerEvents( setStreams ) {
         
         })
 
-        
+        //Adds user to the video call
         socket.on( 'stream-ready', ( peerId ) =>{
 
             connectToNewUser( peerId, stream.current, peer, setStreams )            
@@ -64,6 +67,10 @@ export default function useOnPeerEvents( setStreams ) {
         }
       
     }, [ ])
+
+    return{
+        streams
+    }
     
 }
 

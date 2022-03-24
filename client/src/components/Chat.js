@@ -13,14 +13,12 @@ import { useAppSettings } from '../context/appSettings'
 export default function Chat(  ) {
 
   const { members }             = useOnChatEvents()
-  const { room }        = useAppSettings()  
-  const [ streams, setStreams ] = useState( [] )
+  const { streams }             =   useOnPeerEvents()
   const [ loading, setLoading ] = useState( true )
 
   const { id: currentId } = useSocket();
 
   
-  useOnPeerEvents( setStreams, room[ 'id' ] )
 
   useEffect( () => {
 
