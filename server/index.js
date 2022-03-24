@@ -20,8 +20,7 @@ const { socketConnection,
         socketJoinRoom, 
         socketCreateRoom,
         socketLeaveRoom, 
-        socketAudio,
-        socketVideo
+        socketStreamReady
 } = require( './socket-events.js' )
 
 io.listen( server, {
@@ -58,14 +57,9 @@ io.on( 'connection', ( socket ) => {
         socketLeaveRoom( socket )
     })  
 
-    socket.on( 'audio', () => {
+    socket.on( 'stream-ready', ( roomId ) => {
 
-        socketAudio( socket )
-    })
-
-    socket.on( 'video', () => {
-
-        socketVideo( socket )
+        socketStreamReady( socket,  roomId )
     })
 
 })

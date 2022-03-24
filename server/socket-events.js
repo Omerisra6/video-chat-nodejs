@@ -1,10 +1,10 @@
 
-exports.socketConnection = ( id ) => { 
+exports.socketConnection  = ( id ) => { 
 
     console.log( id + ' connected' )
 }
 
-exports.socketJoinRoom   = ( data, socket ) => {
+exports.socketJoinRoom    = ( data, socket ) => {
 
     const { io } = require( './index.js' )
     const { isRoomExists, addUserToRoom, getRoom } = require( './socket-events-helpers.js')
@@ -28,7 +28,7 @@ exports.socketJoinRoom   = ( data, socket ) => {
    
 }
 
-exports.socketCreateRoom = ( data, socket ) => {
+exports.socketCreateRoom  = ( data, socket ) => {
 
     const { io }   = require( './index.js' )
     const { createNewRoom, addUserToRoom, getRoom } = require( './socket-events-helpers.js')
@@ -45,7 +45,7 @@ exports.socketCreateRoom = ( data, socket ) => {
     io.to( roomId ).emit( 'chat-members', room[ 'users' ] )
 }
 
-exports.socketLeaveRoom  = ( socket  ) => {
+exports.socketLeaveRoom   = ( socket  ) => {
 
     const { io } = require( './index.js')
     const { removeUserFromRoom, isRoomExists, getRoom } = require( './socket-events-helpers.js')
@@ -63,20 +63,15 @@ exports.socketLeaveRoom  = ( socket  ) => {
     io.to( roomId ).emit( 'chat-members', room[ 'users' ] )    
 }
 
-exports.socketAudio      = ( socket ) => {
+exports.socketStreamReady = ( socket, roomId ) => {
 
-    const { io } = require( './index.js' )
-    
-    const id  = socket.id
+    const { io } = require( './index.js')
+    const { isRoomExists } = require( './socket-events-helpers.js')
 
-    io.to( id ).emit( 'audio' );
-}
+    if ( ! isRoomExists( roomId )) {
 
-exports.socketVideo      = ( socket ) => {
+        return
+    }
 
-    const { io } = require( './index.js' )
-    
-    const id  = socket.id
-
-    io.to( id ).emit( 'video' );
+    io.to( roomId ).emit( 'stream-ready', socket.id )
 }
