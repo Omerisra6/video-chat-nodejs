@@ -8,7 +8,7 @@ export default function Video( { stream, name } ) {
 
     const videoRef = useRef()
     const socketId = useSocket().id
-    const streamObj = stream[ 'stream']
+    const streamObj = stream[ 'stream' ]
 
     useEffect( () => {
 

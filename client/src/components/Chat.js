@@ -43,7 +43,7 @@ export default function Chat(  ) {
         { streams.map( stream => {
 
           const name = getNameById( stream[ 'id' ], currentId )
-          return <Video stream={stream} name={ name }/>
+          return <Video stream={stream} name={ name } key={ stream[ 'id' ] }/>
 
         })}
 

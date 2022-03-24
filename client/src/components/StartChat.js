@@ -8,24 +8,35 @@ import StyledStartChatWrapper from './ui/styled/StyledStartChatWrapper'
 
 export default function StartChat( ) {
 
-  const { setUser, setRoom } = useAppSettings()
-  
+  useOnErrorEvents()
+  useOnRoomEvents()
+
+  function toggleWindow(){
+
+    if( window.location.hash != '#create-chat' ){
+
+      window.location.hash = '#join-chat'
+    }
+  }
+
   useEffect( () => {
-      if( window.location != 'http://localhost:3000/#create-chat' ){
-        window.location.href = 'http://localhost:3000/#join-chat'
-      }
+
     
-      //Handles css target change
-      window.addEventListener('popstate', function (event) {
+    window.location.hash = '#join-chat'
     
-        if( this.window.location != 'http://localhost:3000/#create-chat' ){
-          window.location.href = 'http://localhost:3000/#join-chat'
-        }
-      });
+  
+    //Handles css target change
+    window.addEventListener( 'popstate', function () {
+    
+      toggleWindow()
+    });
+
+    return () => window.removeEventListener( 'popstate', toggleWindow() )
+
+
   }, [] );
   
-  useOnErrorEvents( )
-  useOnRoomEvents( setUser, setRoom )
+ 
 
   return (
     <StyledStartChatWrapper>

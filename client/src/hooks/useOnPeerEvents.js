@@ -26,7 +26,7 @@ export default function useOnPeerEvents( setStreams ) {
     
     useEffect( async () => {
 
-        stream.current = await navigator.mediaDevices.getUserMedia( { audio: true, video: true } );
+        stream.current = await navigator.mediaDevices.getUserMedia( { audio: true, video: true } )
             
         //Add current user stream
         setStreams( streams => [ ...streams, { stream: stream.current, id: currentId } ] )
@@ -46,16 +46,22 @@ export default function useOnPeerEvents( setStreams ) {
         
         socket.on( 'stream-ready', ( peerId ) =>{
 
-            setTimeout( () => { connectToNewUser( peerId, stream.current, peer, setStreams ) }, 3000 )
+            connectToNewUser( peerId, stream.current, peer, setStreams )            
         })
 
         socket.emit( 'stream-ready', roomId )
 
         
-        socket.on( 'left-room', ( id ) => {
+        socket.on( 'left-room', ( peerId ) => {
 
-            removeStream( id, setStreams )
+            removeStream( peerId, setStreams )
         })
+
+        return () => {
+
+            socket.off( 'left-room' )
+            socket.off( 'stream-ready' )
+        }
       
     }, [ ])
     
