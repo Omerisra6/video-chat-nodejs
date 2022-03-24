@@ -5,14 +5,14 @@ import EndCall from './EndCall'
 import StyledChatActionsContainer from './styled/StyledChatActionsContainer'
 import StyledChatBottom from './styled/StyledChatBottom'
 
-export default function ChatBottom( { setUser } ) {
+export default function ChatBottom(  ) {
   return (
     <StyledChatBottom>
         <StyledChatActionsContainer>
 
-          <EnableDisableVideo/>
-          <EndCall setUser={setUser}/>
-          <EnanleDisableAudio/>
+          <EnableDisableVideo />
+          <EndCall />
+          <EnanleDisableAudio />
           
         </StyledChatActionsContainer>
     </StyledChatBottom>

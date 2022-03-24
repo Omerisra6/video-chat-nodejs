@@ -1,14 +1,13 @@
 import React from 'react'
-import { useSocket } from '../../context/socket'
+import { useVideoSettings } from '../../context/videoSettings'
 import ToggleButton from './ToggleButton'
 
-export default function EnableDisableVideo( { setVideo } ) {
+export default function EnableDisableVideo() {
 
-  const socket = useSocket();
-
+  const { setVideo } = useVideoSettings()
   const onClick = ( ) => {
 
-    socket.emit( 'video' )
+    setVideo( video => ! video)
   }
 
   return (

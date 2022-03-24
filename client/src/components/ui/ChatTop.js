@@ -1,9 +1,12 @@
 import React from 'react'
+import { useAppSettings } from '../../context/appSettings'
 import CopyLink from './CopyLink'
 import StyledChatTop from './styled/StyledChatTop'
 
-export default function ChatTop( { room } ) {
+export default function ChatTop( ) {
 
+    const { room } = useAppSettings()
+    
     return (
 
         <StyledChatTop>

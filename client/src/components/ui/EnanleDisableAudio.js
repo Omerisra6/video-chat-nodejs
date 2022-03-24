@@ -1,14 +1,14 @@
 import React from 'react'
-import { useSocket } from '../../context/socket'
+import { useVideoSettings } from '../../context/videoSettings'
 import ToggleButton from './ToggleButton'
 
-export default function EnanleDisableAudio( { setAudio } ) {
+export default function EnanleDisableAudio() {
 
-  const socket = useSocket()
+  const { setAudio } = useVideoSettings()
 
   const onClick = () => {
     
-    socket.emit( 'audio' )
+    setAudio( audio => ! audio )
   }
   return (
 
