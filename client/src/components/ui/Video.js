@@ -4,7 +4,7 @@ import StyledName from './styled/StyledName';
 import StyledVideoContainer from './styled/StyledVideoContainer';
 import StyledVideoWrapper from './styled/StyledVideoWrapper';
 
-export default function Video( { stream, name, oneRow } ) {
+export default function Video( { stream, name } ) {
 
     const videoRef = useRef()
     const socketId = useSocket().id
@@ -21,10 +21,10 @@ export default function Video( { stream, name, oneRow } ) {
         }
 
     }, [ stream, name ]);
-    
+
 
     return (
-        <StyledVideoWrapper oneRow={oneRow}>
+        <StyledVideoWrapper>
             <StyledVideoContainer>
                 
                 <video ref={ videoRef }></video> 
