@@ -22,7 +22,6 @@ export default function Video( { stream, name, oneRow } ) {
 
     }, [ stream, name ]);
     
-    console.log( oneRow )
 
     return (
         <StyledVideoWrapper oneRow={oneRow}>
