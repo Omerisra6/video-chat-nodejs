@@ -2,15 +2,15 @@ const { default: styled } = require("styled-components");
 
 const StyledChatTop = styled.div`
     display: flex;
-    height: 6vh;
     color: #ffff;
     justify-content: center;
     position: relative;    
-    padding: 0.5vh 0.5vw;
+    padding: 2vh 1vw;
 
     & > h1 {
-
+        font-size: 5vh;
         position: absolute;
+        bottom: 1vh;
     }
 
     & > div{
