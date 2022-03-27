@@ -12,6 +12,6 @@ export default function EnanleDisableAudio() {
   }
   return (
 
-    <ToggleButton iconDefault='mic_off' iconToggle='mic' onClickDefault={onClick} onClickToggle={onClick}/>
+    <ToggleButton iconDefault='mic' iconToggle='mic_off' onClickDefault={onClick} onClickToggle={onClick}/>
   )
 }

@@ -12,6 +12,6 @@ export default function EnableDisableVideo() {
 
   return (
     
-    <ToggleButton iconDefault='videocam_off' iconToggle='videocam' onClickDefault={onClick} onClickToggle={onClick}  />
+    <ToggleButton iconDefault='videocam' iconToggle='videocam_off' onClickDefault={onClick} onClickToggle={onClick}  />
   )
 }
