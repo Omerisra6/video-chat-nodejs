@@ -2,10 +2,9 @@ import styled from "styled-components";
 
 const StyledStreamsContainer = styled.div`
     display: flex;
-    justify-content: center;
-    flex-basis: auto;
     flex-wrap: wrap;
-    overflow: hidden;
+    align-items: center;
+    justify-content: center;
     margin-bottom: auto;
 `
 export default StyledStreamsContainer

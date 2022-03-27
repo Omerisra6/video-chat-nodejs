@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useSocket } from '../context/socket'
 import useOnChatEvents from '../hooks/useOnChatEvents'
 import useOnPeerEvents from '../hooks/useOnPeerEvents'
@@ -10,13 +10,12 @@ import Connecting from './ui/Connecting'
 import Video from './ui/Video'
 import { useAppSettings } from '../context/appSettings'
 
-export default function Chat(  ) {
+export default function Chat() {
 
   const { members }             = useOnChatEvents()
   const { streams }             =   useOnPeerEvents()
   const [ loading, setLoading ] = useState( true )
-
-  const { id: currentId } = useSocket();
+  const { id: currentId }       = useSocket();
 
   
 
@@ -41,7 +40,7 @@ export default function Chat(  ) {
         { streams.map( stream => {
 
           const name = getNameById( stream[ 'id' ], currentId )
-          return <Video stream={stream} name={ name } key={ stream[ 'id' ] }/>
+          return <Video stream={stream} name={ name } key={ stream[ 'id' ] } oneRow={ streams.length <= 4 }/> 
 
         })}
 
