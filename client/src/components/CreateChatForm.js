@@ -32,7 +32,8 @@ export default function CreateChatForm( ) {
   return (
     <StyledForm id='create-chat' className='invisible' onSubmit={onSubmit}>
 
-      <h2> Create A Chat </h2>
+
+      <h2> Create A Chat <span> ( 8 members max )</span> </h2>
 
       <SerachBox label='Username' className='username' size='md' inputRef={userRef}/>
       <SerachBox label='Room name' size='md'inputRef={roomRef}/>

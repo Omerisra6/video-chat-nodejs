@@ -1,17 +1,6 @@
 
 let rooms = {}
 
-
-exports.isRoomExists = ( id ) => {
-
-    if( rooms[ id ] ){
-
-        return true
-    }
-
-    return false
-}
-
 exports.getRoom = ( id ) => {
 
     return rooms[ id ]

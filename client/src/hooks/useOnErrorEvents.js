@@ -17,6 +17,11 @@ export default function useOnErrorEvents( ) {
             alert( 'room name allready in use')
         }
 
+        const roomFullCallback = () => {
+
+            alert( 'room full')
+        }
+
         socket.on( 'room-not-found', () => {
 
             roomNotFoundCallback()
@@ -27,10 +32,18 @@ export default function useOnErrorEvents( ) {
             roomExistsCallback()
         })
 
+        socket.on( 'room-full', () => {
+
+            roomFullCallback()
+        })
+
+
         return () => {
 
             socket.off( 'room-not-found', roomNotFoundCallback )
             socket.off( 'room-exists', roomExistsCallback )
+            socket.off( 'room-full', roomFullCallback )
+
         }
         
     }, [])

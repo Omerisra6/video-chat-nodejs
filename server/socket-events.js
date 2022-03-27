@@ -7,22 +7,29 @@ exports.socketConnection  = ( id ) => {
 exports.socketJoinRoom    = ( data, socket ) => {
 
     const { io } = require( './index.js' )
-    const { isRoomExists, addUserToRoom, getRoom } = require( './socket-events-helpers.js')
+    const { addUserToRoom, getRoom } = require( './socket-events-helpers.js')
 
     const { roomId, username } = data
     const id = socket.id
-  
-    if( ! isRoomExists( roomId ) ){
+    const room = getRoom( roomId )
+
+    if( ! room ){
 
         io.to( id ).emit( 'room-not-found' )
         return
     }
 
+    if ( room[ 'users' ].length === 8 ) {
+        console.log( room[ 'users' ] )
+        io.to( id ).emit( 'room-full' )
+        return
+    }
+
+
     addUserToRoom( roomId, id, username )
     
     socket.join( roomId )
 
-    const room = getRoom( roomId )
     io.to( roomId ).emit( 'joined-room', { username, id, room:{ name: room[ 'roomName' ], id: roomId } } )
     io.to( roomId ).emit( 'chat-members', room[ 'users' ] )
    
@@ -48,17 +55,17 @@ exports.socketCreateRoom  = ( data, socket ) => {
 exports.socketLeaveRoom   = ( socket  ) => {
 
     const { io } = require( './index.js')
-    const { removeUserFromRoom, isRoomExists, getRoom } = require( './socket-events-helpers.js')
+    const { removeUserFromRoom, getRoom } = require( './socket-events-helpers.js')
 
     const roomId = removeUserFromRoom( socket.id )
+    const room = getRoom( roomId )
 
-    if ( ! isRoomExists( roomId )) {
+    if ( ! room ) {
 
         return
     }
 
 
-    const room = getRoom( roomId )
     io.to( roomId ).emit( 'left-room', socket.id )
     io.to( roomId ).emit( 'chat-members', room[ 'users' ] )    
 }
@@ -66,9 +73,9 @@ exports.socketLeaveRoom   = ( socket  ) => {
 exports.socketStreamReady = ( socket, roomId ) => {
 
     const { io } = require( './index.js')
-    const { isRoomExists } = require( './socket-events-helpers.js')
+    const { getRoom } = require( './socket-events-helpers.js')
 
-    if ( ! isRoomExists( roomId )) {
+    if ( ! getRoom( roomId ) ) {
 
         return
     }
