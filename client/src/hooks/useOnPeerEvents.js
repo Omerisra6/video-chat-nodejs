@@ -15,7 +15,7 @@ export default function useOnPeerEvents( ) {
 
     const currentId = socket.id
     const roomId = room[ 'id' ]
-    const peer = new Peer( socket.id , { path: '/peerjs', host: '/',port: '80' } );
+    const peer = new Peer( socket.id , { path: '/peerjs', host: window.location.host , port: window.location.port } );
 
     //Handles stream audio and video by stream ref
     useEffect( () => {
